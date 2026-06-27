@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="7"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-06 05:01:37 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzA0OjM2OjU4IFBNOzE5OTk="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzA1OjAxOjM3IFBNOzE7MjA5Nw=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="n" type="Integer" array="False" size=""/>
+            <declare name="m" type="Integer" array="False" size=""/>
+            <input variable="n"/>
+            <input variable="m"/>
+            <declare name="qoldiq" type="Integer" array="False" size=""/>
+            <declare name="bolinma" type="Integer" array="False" size=""/>
+            <assign variable="bolinma" expression="0"/>
+            <assign variable="qoldiq" expression="n"/>
+            <while expression="qoldiq&gt;=m">
+                <assign variable="qoldiq" expression="qoldiq-m"/>
+                <assign variable="bolinma" expression="bolinma+1"/>
+            </while>
+            <output expression="qoldiq" newline="True"/>
+            <output expression="bolinma" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

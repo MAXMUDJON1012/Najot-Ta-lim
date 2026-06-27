@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="o'rtadagi sondi topish"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-21 03:09:15 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTE5OzAyOjM0OjUyIFBNOzE5OTM="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTIxOzAzOjA5OjE1IFBNOzE7MjA5Ng=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="a, b, c, mid, max" type="Integer" array="False" size=""/>
+            <input variable="a"/>
+            <input variable="b"/>
+            <input variable="c"/>
+            <if expression="(a &gt; b And a &lt; c) Or (a &lt; b And a &gt; c)">
+                <then>
+                    <assign variable="mid" expression="a"/>
+                </then>
+                <else>
+                    <if expression="(b &gt; a And b &lt; c) Or (b &lt; a And b &gt; c)">
+                        <then>
+                            <assign variable="mid" expression="b"/>
+                        </then>
+                        <else>
+                            <assign variable="mid" expression="c"/>
+                        </else>
+                    </if>
+                </else>
+            </if>
+            <output expression="mid" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

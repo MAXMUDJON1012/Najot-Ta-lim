@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="10"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-04 08:54:56 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA0OzA4OjUwOjQyIFBNOzE5OTA="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA0OzA4OjU0OjU2IFBNOzE7MjEwNw=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="parol" type="Real" array="False" size=""/>
+            <declare name="login" type="String" array="False" size=""/>
+            <input variable="parol"/>
+            <input variable="login"/>
+            <if expression="parol==1234 and login==&quot;admin&quot;">
+                <then>
+                    <output expression="&quot;kirish mumkun&quot;" newline="True"/>
+                </then>
+                <else>
+                    <output expression="&quot;kirilmasin&quot;" newline="True"/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

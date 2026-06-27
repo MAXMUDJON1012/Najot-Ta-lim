@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="3"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-05 03:45:51 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA1OzAzOjM0OjA1IFBNOzE5ODc="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA1OzAzOjQzOjQ3IFBNOzI7TUFYTVU7QVNVUzsyMDI2LTA1LTA1OzAzOjE4OjUwIFBNOzIuZnByZzs0NzM2"/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA1OzAzOjQ1OjUxIFBNOzE7MjA5OA=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="a" type="Integer" array="False" size=""/>
+            <declare name="b" type="Integer" array="False" size=""/>
+            <declare name="count" type="Integer" array="False" size=""/>
+            <input variable="a"/>
+            <input variable="b"/>
+            <assign variable="count" expression="0"/>
+            <for variable="b" start="b-1" end="a+1" direction="dec" step="1">
+                <output expression="b" newline="True"/>
+                <assign variable="count" expression="count+1"/>
+            </for>
+            <output expression="count &amp;   &quot;ta son&quot;" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

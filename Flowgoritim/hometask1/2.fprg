@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="2"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-02 05:36:58 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzA1OjM0OjM3IFBNOzE5OTE="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzA1OjM2OjU4IFBNOzE7MjEwNA=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="kg" type="Integer" array="False" size=""/>
+            <declare name="T" type="Integer" array="False" size=""/>
+            <input variable="kg"/>
+            <assign variable="T" expression="kg/1000"/>
+            <output expression="T" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

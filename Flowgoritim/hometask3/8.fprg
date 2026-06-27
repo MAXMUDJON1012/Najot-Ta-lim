@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="8"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-06 06:01:12 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzA1OjQ0OjA2IFBNOzE5OTI="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzA1OjUwOjU0IFBNOzE7TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzA2OjI3OjQyIFBNOzEyLmZwcmc7NDc4NA=="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzA2OjAxOjEyIFBNOzI7MjA5Mg=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="n" type="Integer" array="False" size=""/>
+            <input variable="n"/>
+            <declare name="qoldiq" type="Integer" array="False" size=""/>
+            <output expression="&quot;n=&quot;" newline="True"/>
+            <while expression="n&gt;0">
+                <assign variable="qoldiq" expression="n mod 10"/>
+                <output expression="qoldiq" newline="True"/>
+                <assign variable="n" expression="n / 10"/>
+            </while>
+        </body>
+    </function>
+</flowgorithm>

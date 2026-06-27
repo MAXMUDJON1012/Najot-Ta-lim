@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="6 SAVOL"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-21 04:11:20 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTIxOzAzOjM1OjA5IFBNOzE5OTA="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTIxOzA0OjExOjIwIFBNOzE7MjA4Ng=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="a, b, nechta, qoldiq" type="Integer" array="False" size=""/>
+            <input variable="a"/>
+            <input variable="b"/>
+            <assign variable="nechta" expression="0"/>
+            <assign variable="qoldiq" expression="0"/>
+            <while expression="a&gt;b">
+                <assign variable="a" expression="a-b"/>
+                <assign variable="nechta" expression="nechta+1"/>
+            </while>
+            <output expression="nechta" newline="True"/>
+            <assign variable="qoldiq" expression="a"/>
+            <output expression="qoldiq" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

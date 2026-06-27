@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="3"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-02 11:22:40 AM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzExOjE2OjMzIEFNOzE5Njk="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzExOjIyOjQwIEFNOzE7MjA3Mg=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="a" type="Integer" array="False" size=""/>
+            <declare name="b" type="Integer" array="False" size=""/>
+            <input variable="A"/>
+            <input variable="B"/>
+            <if expression="a&gt;b or b&gt;a">
+                <then>
+                    <output expression="b" newline="True"/>
+                </then>
+                <else>
+                    <output expression="a" newline="True"/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

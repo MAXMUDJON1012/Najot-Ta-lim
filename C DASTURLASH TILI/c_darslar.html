@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C Dasturlash — To'liq Kurs</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --bg2: #13161e;
+    --bg3: #1a1e2a;
+    --border: #252a38;
+    --accent: #4fffb0;
+    --accent2: #7c6dfa;
+    --accent3: #ff6b6b;
+    --yellow: #ffd166;
+    --text: #e8eaf0;
+    --muted: #6b7280;
+    --code-bg: #0a0c10;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; min-height: 100vh; }
+
+  /* Layout */
+  .app { display: flex; min-height: 100vh; }
+
+  /* Sidebar */
+  .sidebar {
+    width: 260px; min-width: 260px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 0;
+    position: sticky; top: 0; height: 100vh;
+    overflow-y: auto;
+    display: flex; flex-direction: column;
+  }
+  .sidebar-header {
+    padding: 24px 20px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-header .logo { font-size: 20px; font-weight: 800; color: var(--accent); letter-spacing: -0.5px; }
+  .sidebar-header .sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin-top: 12px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+
+  .nav-section { padding: 12px 0; }
+  .nav-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; padding: 0 20px; margin-bottom: 6px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 20px; cursor: pointer;
+    font-size: 13px; color: var(--muted);
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .nav-item:hover { color: var(--text); background: var(--bg3); }
+  .nav-item.active { color: var(--accent); border-left-color: var(--accent); background: rgba(79,255,176,0.05); }
+  .nav-item .num { width: 20px; height: 20px; border-radius: 50%; border: 1px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; }
+  .nav-item.done .num { background: var(--accent); border-color: var(--accent); color: #000; }
+  .nav-item .title { flex: 1; }
+
+  /* Main */
+  .main { flex: 1; overflow-y: auto; }
+  .lesson { display: none; padding: 48px 52px; max-width: 800px; animation: fadeIn 0.3s ease; }
+  .lesson.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .lesson-tag { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+  .lesson-title { font-size: 36px; font-weight: 800; line-height: 1.1; margin-bottom: 8px; letter-spacing: -1px; }
+  .lesson-desc { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 36px; border-bottom: 1px solid var(--border); padding-bottom: 32px; }
+
+  h2 { font-size: 20px; font-weight: 600; margin: 36px 0 14px; color: var(--text); }
+  h3 { font-size: 15px; font-weight: 600; margin: 24px 0 10px; color: var(--yellow); }
+  p { font-size: 15px; line-height: 1.75; color: #adb5c7; margin-bottom: 14px; }
+
+  /* Code blocks */
+  .code-wrap { background: var(--code-bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 16px 0; }
+  .code-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: var(--bg3); border-bottom: 1px solid var(--border); }
+  .code-header .lang { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+  .code-header .dots { display: flex; gap: 6px; }
+  .code-header .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; } .dot-y { background: #ffbd2e; } .dot-g { background: #28ca41; }
+  pre { padding: 20px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; line-height: 1.9; }
+
+  /* Syntax highlight */
+  .kw { color: #c792ea; } .fn { color: #82aaff; } .str { color: #c3e88d; }
+  .num { color: #f78c6c; } .cm { color: #546e7a; font-style: italic; }
+  .ty { color: #ffcb6b; } .op { color: #89ddff; } .pp { color: #f07178; }
+
+  /* Output box */
+  .output { background: #080b10; border: 1px solid #1e4620; border-radius: 8px; padding: 14px 18px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4fffb0; line-height: 1.9; margin: 12px 0; }
+  .output-label { font-size: 11px; color: #2d6b32; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+
+  /* Info cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; margin: 16px 0; }
+  .card { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .card-top { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+  .card-code { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--yellow); font-weight: 700; }
+  .card-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .card.accent { border-color: rgba(79,255,176,0.3); background: rgba(79,255,176,0.04); }
+  .card.warn { border-color: rgba(255,107,107,0.3); background: rgba(255,107,107,0.04); }
+
+  /* Alert boxes */
+  .note { background: rgba(124,109,250,0.08); border-left: 3px solid var(--accent2); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 14px; color: #c4c0f5; line-height: 1.7; }
+  .warn-box { background: rgba(255,107,107,0.07); border-left: 3px solid var(--accent3); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 14px; color: #ffa8a8; line-height: 1.7; }
+  .tip { background: rgba(79,255,176,0.06); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 14px; color: #a8f5d8; line-height: 1.7; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th { background: var(--bg3); color: var(--muted); font-weight: 600; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: #adb5c7; }
+  td code, p code { font-family: 'JetBrains Mono', monospace; background: var(--bg3); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; font-size: 13px; color: var(--yellow); }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* Nav buttons */
+  .nav-btns { display: flex; gap: 12px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
+  .btn { padding: 12px 24px; border-radius: 8px; font-size: 14px; font-family: 'Syne', sans-serif; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; }
+  .btn-prev { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+  .btn-prev:hover { color: var(--text); border-color: var(--muted); }
+  .btn-next { background: var(--accent); color: #000; }
+  .btn-next:hover { background: #3de89d; transform: translateY(-1px); }
+  .btn:disabled { opacity: 0.3; cursor: default; transform: none !important; }
+
+  /* Quiz */
+  .quiz { background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin: 24px 0; }
+  .quiz-q { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
+  .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt { padding: 10px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg2); cursor: pointer; font-size: 14px; color: var(--muted); font-family: 'JetBrains Mono', monospace; transition: all 0.15s; }
+  .quiz-opt:hover { border-color: var(--accent2); color: var(--text); }
+  .quiz-opt.correct { border-color: var(--accent); background: rgba(79,255,176,0.08); color: var(--accent); }
+  .quiz-opt.wrong { border-color: var(--accent3); background: rgba(255,107,107,0.08); color: var(--accent3); }
+  .quiz-result { margin-top: 12px; font-size: 14px; display: none; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  @media (max-width: 700px) {
+    .sidebar { width: 220px; min-width: 220px; }
+    .lesson { padding: 28px 24px; }
+    .lesson-title { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo">C Lang</div>
+    <div class="sub">To'liq kurs — boshlang'ich</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Darslar</div>
+    <div class="nav-item active" onclick="goTo(0)"><div class="num">1</div><div class="title">C nima?</div></div>
+    <div class="nav-item" onclick="goTo(1)"><div class="num">2</div><div class="title">Birinchi dastur</div></div>
+    <div class="nav-item" onclick="goTo(2)"><div class="num">3</div><div class="title">O'zgaruvchilar</div></div>
+    <div class="nav-item" onclick="goTo(3)"><div class="num">4</div><div class="title">Ma'lumot turlari</div></div>
+    <div class="nav-item" onclick="goTo(4)"><div class="num">5</div><div class="title">Kiritish / Chiqarish</div></div>
+    <div class="nav-item" onclick="goTo(5)"><div class="num">6</div><div class="title">Operatorlar</div></div>
+    <div class="nav-item" onclick="goTo(6)"><div class="num">7</div><div class="title">if / else</div></div>
+    <div class="nav-item" onclick="goTo(7)"><div class="num">8</div><div class="title">switch</div></div>
+    <div class="nav-item" onclick="goTo(8)"><div class="num">9</div><div class="title">while loop</div></div>
+    <div class="nav-item" onclick="goTo(9)"><div class="num">10</div><div class="title">for loop</div></div>
+    <div class="nav-item" onclick="goTo(10)"><div class="num">11</div><div class="title">do-while loop</div></div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+<!-- LESSON 1: C nima -->
+<div class="lesson active" id="l0">
+  <div class="lesson-tag">1-dars</div>
+  <div class="lesson-title">C dasturlash tili nima?</div>
+  <div class="lesson-desc">Dunyodagi eng kuchli va keng tarqalgan past darajali dasturlash tillaridan biri. 1972 yilda Dennis Ritchie tomonidan yaratilgan.</div>
+
+  <h2>Nima uchun C o'rganish kerak?</h2>
+  <div class="cards">
+    <div class="card accent"><div class="card-top">Tezlik</div><div class="card-code">⚡ Fast</div><div class="card-desc">Mashinaga yaqin, juda tez ishlaydi</div></div>
+    <div class="card accent"><div class="card-top">Asos</div><div class="card-code">📚 Base</div><div class="card-desc">C++, Java, Python — hammasi C dan chiqqan</div></div>
+    <div class="card accent"><div class="card-top">Keng</div><div class="card-code">🌍 Wide</div><div class="card-desc">OS, drayver, mikrocontroller</div></div>
+    <div class="card accent"><div class="card-top">Mantiq</div><div class="card-code">🧠 Logic</div><div class="card-desc">Dasturlash mantiqini o'rgatadi</div></div>
+  </div>
+
+  <h2>C dastur qanday ishlaydi?</h2>
+  <table>
+    <tr><th>#</th><th>Qadam</th><th>Tushuntirish</th></tr>
+    <tr><td>1</td><td>Yozasiz (.c fayl)</td><td>Kodni matn muharririda yozasiz</td></tr>
+    <tr><td>2</td><td>Kompilyatsiya (gcc)</td><td>Kod mashina tiliga o'giriladi</td></tr>
+    <tr><td>3</td><td>Bajariladigan fayl</td><td>.exe yoki a.out fayl hosil bo'ladi</td></tr>
+    <tr><td>4</td><td>Ishlatish</td><td>Dastur kompyuterda ishlaydi</td></tr>
+  </table>
+
+  <div class="note">💡 C ni o'rgansangiz — boshqa tillarni o'rganish juda osonlashadi. C — dasturlashning "otasi".</div>
+
+  <h2>Kerakli dasturlar</h2>
+  <p>C yozish uchun sizga <strong>compiler</strong> (kompilyator) kerak:</p>
+  <div class="cards">
+    <div class="card"><div class="card-top">Windows</div><div class="card-code">MinGW</div><div class="card-desc">GCC compiler yoki Code::Blocks</div></div>
+    <div class="card"><div class="card-top">Linux/Mac</div><div class="card-code">gcc</div><div class="card-desc">Terminal: sudo apt install gcc</div></div>
+    <div class="card"><div class="card-top">Online</div><div class="card-code">repl.it</div><div class="card-desc">O'rnatmasdan brauzerda yozish</div></div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-prev" disabled>← Oldingi</button>
+    <button class="btn btn-next" onclick="goTo(1)">Keyingi →</button>
+  </div>
+</div>
+
+<!-- LESSON 2: Birinchi dastur -->
+<div class="lesson" id="l1">
+  <div class="lesson-tag">2-dars</div>
+  <div class="lesson-title">Birinchi C dastur</div>
+  <div class="lesson-desc">Har bir dasturchi "Hello, World!" bilan boshlaydi. Keling, C dasturning tuzilishini o'rganaylik.</div>
+
+  <h2>Hello World</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">hello.c</div></div>
+    <pre><span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>   <span class="cm">// standart kutubxona</span>
+
+<span class="ty">int</span> <span class="fn">main</span>() {              <span class="cm">// asosiy funksiya</span>
+    <span class="fn">printf</span>(<span class="str">"Salom, Dunyo!\n"</span>);
+    <span class="kw">return</span> <span class="num">0</span>;             <span class="cm">// dastur muvaffaqiyatli tugadi</span>
+}</pre>
+  </div>
+  <div class="output"><div class="output-label">Natija</div>Salom, Dunyo!</div>
+
+  <h2>Har bir qator nima qiladi?</h2>
+  <table>
+    <tr><th>Kod</th><th>Tushuntirish</th></tr>
+    <tr><td><code>#include &lt;stdio.h&gt;</code></td><td>printf/scanf funksiyalarini ulaydi</td></tr>
+    <tr><td><code>int main()</code></td><td>Dastur shu yerdan boshlanadi</td></tr>
+    <tr><td><code>{ ... }</code></td><td>Figurali qavslar — blok (guruh)</td></tr>
+    <tr><td><code>printf("...")</code></td><td>Ekranga yozadi</td></tr>
+    <tr><td><code>\n</code></td><td>Yangi qatorga o'tadi</td></tr>
+    <tr><td><code>return 0;</code></td><td>Dastur 0 qaytarsa = muvaffaqiyat</td></tr>
+  </table>
+
+  <div class="warn-box">⚠️ Har bir buyruq <code>;</code> (nuqtali vergul) bilan tugashi SHART! Unutsangiz — xato!</div>
+
+  <h2>Kompilyatsiya va ishlatish</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">terminal</div></div>
+    <pre><span class="cm"># Kompilyatsiya</span>
+gcc hello.c -o hello
+
+<span class="cm"># Ishlatish</span>
+./hello</pre>
+  </div>
+
+  <h2>Bir nechta narsa chiqarish</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">example.c</div></div>
+    <pre><span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+
+<span class="ty">int</span> <span class="fn">main</span>() {
+    <span class="fn">printf</span>(<span class="str">"Mening ismim Ali\n"</span>);
+    <span class="fn">printf</span>(<span class="str">"Men C o'rganmoqdaman\n"</span>);
+    <span class="fn">printf</span>(<span class="str">"Bu juda qiziq!\n"</span>);
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </div>
+  <div class="output"><div class="output-label">Natija</div>Mening ismim Ali<br>Men C o'rganmoqdaman<br>Bu juda qiziq!</div>
+
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goTo(0)">← Oldingi</button>
+    <button class="btn btn-next" onclick="goTo(2)">Keyingi →</button>
+  </div>
+</div>
+
+<!-- LESSON 3: O'zgaruvchilar -->
+<div class="lesson" id="l2">
+  <div class="lesson-tag">3-dars</div>
+  <div class="lesson-title">O'zgaruvchilar</div>
+  <div class="lesson-desc">O'zgaruvchi — ma'lumotni saqlovchi "quti". Har bir qutining nomi va turi bo'ladi.</div>
+
+  <h2>O'zgaruvchi e'lon qilish</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">C</div></div>
+    <pre><span class="cm">// tur  nom  =  qiymat;</span>
+<span class="ty">int</span>   yosh  = <span class="num">20</span>;
+<span class="ty">float</span> baho  = <span class="num">4.5</span>;
+<span class="ty">char</span>  harf  = <span class="str">'A'</span>;</pre>
+  </div>
+
+  <h2>Identifikator qoidalari</h2>
+  <div class="cards">
+    <div class="card accent"><div class="card-top">✅ To'g'ri</div><div class="card-code">yosh</div><div class="card-desc">harf bilan boshlanadi</div></div>
+    <div class="card accent"><div class="card-top">✅ To'g'ri</div><div class="card-code">_son</div><div class="card-desc">_ bilan boshlanishi mumkin</div></div>
+    <div class="card accent"><div class="card-top">✅ To'g'ri</div><div class="card-code">son1</div><div class="card-desc">ichida raqam bo'lishi mumkin</div></div>
+    <div class="card warn"><div class="card-top">❌ Xato</div><div class="card-code">1son</div><div class="card-desc">raqam bilan boshlanmaydi</div></div>
+    <div class="card warn"><div class="card-top">❌ Xato</div><div class="card-code">mening ism</div><div class="card-desc">bo'sh joy bo'lmaydi</div></div>
+    <div class="card warn"><div class="card-top">❌ Xato</div><div class="card-code">int</div><div class="card-desc">kalit so'z ishlatilmaydi</div></div>
+  </div>
+
+  <h2>Qiymat o'zgartirish</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">C</div></div>
+    <pre><span class="ty">int</span> son = <span class="num">10</span>;     <span class="cm">// e'lon va qiymat berish</span>
+son = <span class="num">20</span>;          <span class="cm">// qiymatni o'zgartirish</span>
+son = son + <span class="num">5</span>;    <span class="cm">// 20 + 5 = 25</span>
+
+<span class="fn">printf</span>(<span class="str">"%d\n"</span>, son);  <span class="cm">// 25 chiqadi</span></pre>
+  </div>
+
+  <h2>Ko'p o'zgaruvchi bir qatorda</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">C</div></div>
+    <pre><span class="ty">int</span> a = <span class="num">5</span>, b = <span class="num">10</span>, c = <span class="num">15</span>;
+<span class="fn">printf</span>(<span class="str">"a=%d, b=%d, c=%d\n"</span>, a, b, c);</pre>
+  </div>
+  <div class="output"><div class="output-label">Natija</div>a=5, b=10, c=15</div>
+
+  <div class="tip">💡 O'zgaruvchi nomini tushunarli qo'ying: <code>x</code> emas, <code>yosh</code> yoki <code>narx</code> — kod o'qilishi osonlashadi.</div>
+
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goTo(1)">← Oldingi</button>
+    <button class="btn btn-next" onclick="goTo(3)">Keyingi →</button>
+  </div>
+</div>
+
+<!-- LESSON 4: Ma'lumot turlari -->
+<div class="lesson" id="l3">
+  <div class="lesson-tag">4-dars</div>
+  <div class="lesson-title">Ma'lumot turlari</div>
+  <div class="lesson-desc">C da har bir o'zgaruvchining turi bo'ladi. Tur nechta xotira ishlatilishini va qanday qiymat saqlanishini belgilaydi.</div>
+
+  <h2>Asosiy turlar</h2>
+  <table>
+    <tr><th>Tur</th><th>Xotira</th><th>Diapazon</th><th>Misol</th></tr>
+    <tr><td><code>int</code></td><td>4 bayt</td><td>-2,147,483,648 ... 2,147,483,647</td><td><code>int yosh = 20;</code></td></tr>
+    <tr><td><code>short</code></td><td>2 bayt</td><td>-32,768 ... 32,767</td><td><code>short kichik = 100;</code></td></tr>
+    <tr><td><code>long</code></td><td>8 bayt</td><td>Juda katta son</td><td><code>long katta = 999999L;</code></td></tr>
+    <tr><td><code>float</code></td><td>4 bayt</td><td>~7 xona aniqligi</td><td><code>float narx = 3.14;</code></td></tr>
+    <tr><td><code>double</code></td><td>8 bayt</td><td>~15 xona aniqligi</td><td><code>double pi = 3.14159;</code></td></tr>
+    <tr><td><code>char</code></td><td>1 bayt</td><td>Bitta belgi</td><td><code>char harf = 'A';</code></td></tr>
+  </table>
+
+  <h2>printf format belgilari</h2>
+  <div class="cards">
+    <div class="card"><div class="card-top">int</div><div class="card-code">%d</div><div class="card-desc">butun son</div></div>
+    <div class="card"><div class="card-top">float</div><div class="card-code">%f</div><div class="card-desc">kasr son</div></div>
+    <div class="card"><div class="card-top">double</div><div class="card-code">%lf</div><div class="card-desc">aniq kasr</div></div>
+    <div class="card"><div class="card-top">char</div><div class="card-code">%c</div><div class="card-desc">belgi</div></div>
+    <div class="card"><div class="card-top">string</div><div class="card-code">%s</div><div class="card-desc">matn</div></div>
+    <div class="card"><div class="card-top">long</div><div class="card-code">%ld</div><div class="card-desc">katta son</div></div>
+  </div>
+
+  <h2>Amaliy misol</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">turlar.c</div></div>
+    <pre><span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+
+<span class="ty">int</span> <span class="fn">main</span>() {
+    <span class="ty">int</span>    yosh   = <span class="num">21</span>;
+    <span class="ty">double</span> narx   = <span class="num">15000.50</span>;
+    <span class="ty">char</span>   daraja = <span class="str">'A'</span>;
+    <span class="ty">float</span>  baho   = <span class="num">4.75</span>;
+
+    <span class="fn">printf</span>(<span class="str">"Yosh:   %d\n"</span>,   yosh);
+    <span class="fn">printf</span>(<span class="str">"Narx:   %.2f\n"</span>, narx);   <span class="cm">// 2 kasr xona</span>
+    <span class="fn">printf</span>(<span class="str">"Daraja: %c\n"</span>,   daraja);
+    <span class="fn">printf</span>(<span class="str">"Baho:   %.1f\n"</span>, baho);
+
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </div>
+  <div class="output"><div class="output-label">Natija</div>Yosh:   21<br>Narx:   15000.50<br>Daraja: A<br>Baho:   4.8</div>
+
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goTo(2)">← Oldingi</button>
+    <button class="btn btn-next" onclick="goTo(4)">Keyingi →</button>
+  </div>
+</div>
+
+<!-- LESSON 5: Kiritish/Chiqarish -->
+<div class="lesson" id="l4">
+  <div class="lesson-tag">5-dars</div>
+  <div class="lesson-title">Kiritish va Chiqarish</div>
+  <div class="lesson-desc">printf — ekranga yozadi. scanf — foydalanuvchidan ma'lumot oladi. Ikkalasi stdio.h kutubxonasidan.</div>
+
+  <h2>printf — chiqarish</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">C</div></div>
+    <pre><span class="ty">int</span> a = <span class="num">5</span>, b = <span class="num">3</span>;
+<span class="fn">printf</span>(<span class="str">"a = %d\n"</span>, a);
+<span class="fn">printf</span>(<span class="str">"b = %d\n"</span>, b);
+<span class="fn">printf</span>(<span class="str">"Yig'indi = %d\n"</span>, a + b);</pre>
+  </div>
+  <div class="output"><div class="output-label">Natija</div>a = 5<br>b = 3<br>Yig'indi = 8</div>
+
+  <h2>scanf — kiritish</h2>
+  <div class="warn-box">⚠️ scanf da o'zgaruvchi oldiga <code>&amp;</code> (ampersand) qo'yish SHART! Bu — "manzil belgisi".</div>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">kiriting.c</div></div>
+    <pre><span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+
+<span class="ty">int</span> <span class="fn">main</span>() {
+    <span class="ty">int</span> son;
+    <span class="fn">printf</span>(<span class="str">"Son kiriting: "</span>);
+    <span class="fn">scanf</span>(<span class="str">"%d"</span>, <span class="op">&amp;</span>son);           <span class="cm">// & muhim!</span>
+    <span class="fn">printf</span>(<span class="str">"Siz %d kiritdingiz\n"</span>, son);
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </div>
+  <div class="output"><div class="output-label">Ishlatish</div>Son kiriting: 42<br>Siz 42 kiritdingiz</div>
+
+  <h2>Bir nechta o'zgaruvchi kiritish</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">C</div></div>
+    <pre><span class="ty">int</span> a, b;
+<span class="fn">printf</span>(<span class="str">"Ikki son kiriting: "</span>);
+<span class="fn">scanf</span>(<span class="str">"%d %d"</span>, <span class="op">&amp;</span>a, <span class="op">&amp;</span>b);
+<span class="fn">printf</span>(<span class="str">"Yig'indi: %d\n"</span>, a + b);</pre>
+  </div>
+  <div class="output"><div class="output-label">Ishlatish</div>Ikki son kiriting: 10 20<br>Yig'indi: 30</div>
+
+  <h2>Maxsus belgilar (\)</h2>
+  <div class="cards">
+    <div class="card"><div class="card-top">Yangi qator</div><div class="card-code">\n</div></div>
+    <div class="card"><div class="card-top">Tab (bo'shliq)</div><div class="card-code">\t</div></div>
+    <div class="card"><div class="card-top">Qo'shtirnoq</div><div class="card-code">\"</div></div>
+    <div class="card"><div class="card-top">Teskari chiziq</div><div class="card-code">\\</div></div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goTo(3)">← Oldingi</button>
+    <button class="btn btn-next" onclick="goTo(5)">Keyingi →</button>
+  </div>
+</div>
+
+<!-- LESSON 6: Operatorlar -->
+<div class="lesson" id="l5">
+  <div class="lesson-tag">6-dars</div>
+  <div class="lesson-title">Operatorlar</div>
+  <div class="lesson-desc">Operatorlar — sonlar ustida amal bajaruvchi belgilar. Arifmetik, taqqoslash, mantiqiy va boshqalar.</div>
+
+  <h2>Arifmetik operatorlar</h2>
+  <table>
+    <tr><th>Operator</th><th>Nomi</th><th>Misol</th><th>Natija</th></tr>
+    <tr><td><code>+</code></td><td>Qo'shish</td><td><code>5 + 3</code></td><td>8</td></tr>
+    <tr><td><code>-</code></td><td>Ayirish</td><td><code>5 - 3</code></td><td>2</td></tr>
+    <tr><td><code>*</code></td><td>Ko'paytirish</td><td><code>5 * 3</code></td><td>15</td></tr>
+    <tr><td><code>/</code></td><td>Bo'lish</td><td><code>10 / 3</code></td><td>3 (butun!)</td></tr>
+    <tr><td><code>%</code></td><td>Qoldiq</td><td><code>10 % 3</code></td><td>1</td></tr>
+  </table>
+
+  <div class="warn-box">⚠️ <code>10 / 3 = 3</code> — ikkita int bo'linsa, natija ham int bo'ladi! Kasr olish uchun: <code>10.0 / 3</code> = 3.333...</div>
+
+  <h2>Qisqartma operatorlar</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">C</div></div>
+    <pre><span class="ty">int</span> x = <span class="num">10</span>;
+x += <span class="num">5</span>;   <span class="cm">// x = x + 5  → 15</span>
+x -= <span class="num">3</span>;   <span class="cm">// x = x - 3  → 12</span>
+x *= <span class="num">2</span>;   <span class="cm">// x = x * 2  → 24</span>
+x /= <span class="num">4</span>;   <span class="cm">// x = x / 4  → 6</span>
+x++;      <span class="cm">// x = x + 1  → 7</span>
+x--;      <span class="cm">// x = x - 1  → 6</span></pre>
+  </div>
+
+  <h2>Taqqoslash operatorlari</h2>
+  <div class="cards">
+    <div class="card"><div class="card-top">Teng</div><div class="card-code">==</div><div class="card-desc">5 == 5 → 1 (true)</div></div>
+    <div class="card"><div class="card-top">Teng emas</div><div class="card-code">!=</div><div class="card-desc">5 != 3 → 1 (true)</div></div>
+    <div class="card"><div class="card-top">Katta</div><div class="card-code">&gt;</div><div class="card-desc">5 > 3 → 1</div></div>
+    <div class="card"><div class="card-top">Kichik</div><div class="card-code">&lt;</div><div class="card-desc">3 < 5 → 1</div></div>
+    <div class="card"><div class="card-top">Katta yoki teng</div><div class="card-code">&gt;=</div><div class="card-desc">5 >= 5 → 1</div></div>
+    <div class="card"><div class="card-top">Kichik yoki teng</div><div class="card-code">&lt;=</div><div class="card-desc">3 <= 5 → 1</div></div>
+  </div>
+
+  <h2>Mantiqiy operatorlar</h2>
+  <table>
+    <tr><th>Operator</th><th>Nomi</th><th>Misol</th><th>Natija</th></tr>
+    <tr><td><code>&amp;&amp;</code></td><td>VA (AND)</td><td><code>5>3 &amp;&amp; 2>1</code></td><td>1 (ikkisi ham to'g'ri)</td></tr>
+    <tr><td><code>||</code></td><td>YOKI (OR)</td><td><code>5>3 || 1>9</code></td><td>1 (bittasi to'g'ri)</td></tr>
+    <tr><td><code>!</code></td><td>EMAS (NOT)</td><td><code>!(5>3)</code></td><td>0 (teskarisi)</td></tr>
+  </table>
+
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goTo(4)">← Oldingi</button>
+    <button class="btn btn-next" onclick="goTo(6)">Keyingi →</button>
+  </div>
+</div>
+
+<!-- LESSON 7: if/else -->
+<div class="lesson" id="l6">
+  <div class="lesson-tag">7-dars</div>
+  <div class="lesson-title">Shart operatori: if / else</div>
+  <div class="lesson-desc">Dastur turli sharoitlarda turlicha harakat qilsin deyilsa — if/else ishlatiladi.</div>
+
+  <h2>if sintaksisi</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">C</div></div>
+    <pre><span class="kw">if</span> (shart) {
+    <span class="cm">// shart TRUE bo'lsa ishlaydi</span>
+} <span class="kw">else</span> {
+    <span class="cm">// shart FALSE bo'lsa ishlaydi</span>
+}</pre>
+  </div>
+
+  <h2>Misol — juft yoki toq</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">juft_toq.c</div></div>
+    <pre><span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+
+<span class="ty">int</span> <span class="fn">main</span>() {
+    <span class="ty">int</span> n;
+    <span class="fn">printf</span>(<span class="str">"Son kiriting: "</span>);
+    <span class="fn">scanf</span>(<span class="str">"%d"</span>, <span class="op">&amp;</span>n);
+
+    <span class="kw">if</span> (n % <span class="num">2</span> == <span class="num">0</span>) {
+        <span class="fn">printf</span>(<span class="str">"%d - JUFT son\n"</span>, n);
+    } <span class="kw">else</span> {
+        <span class="fn">printf</span>(<span class="str">"%d - TOQ son\n"</span>, n);
+    }
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </div>
+  <div class="output"><div class="output-label">Natija (n=7)</div>7 - TOQ son</div>
+
+  <h2>else if — ko'p shart</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">baho.c</div></div>
+    <pre><span class="ty">int</span> ball = <span class="num">78</span>;
+
+<span class="kw">if</span> (ball >= <span class="num">90</span>) {
+    <span class="fn">printf</span>(<span class="str">"A'lo (5)\n"</span>);
+} <span class="kw">else if</span> (ball >= <span class="num">70</span>) {
+    <span class="fn">printf</span>(<span class="str">"Yaxshi (4)\n"</span>);   <span class="cm">// &lt;-- bu ishlaydi</span>
+} <span class="kw">else if</span> (ball >= <span class="num">55</span>) {
+    <span class="fn">printf</span>(<span class="str">"Qoniqarli (3)\n"</span>);
+} <span class="kw">else</span> {
+    <span class="fn">printf</span>(<span class="str">"Qoniqarsiz (2)\n"</span>);
+}</pre>
+  </div>
+  <div class="output"><div class="output-label">Natija</div>Yaxshi (4)</div>
+
+  <h2>Ternary operator — qisqa if</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">C</div></div>
+    <pre><span class="ty">int</span> a = <span class="num">10</span>, b = <span class="num">20</span>;
+<span class="ty">int</span> max = (a > b) ? a : b;
+<span class="cm">//       shart ? TRUE : FALSE</span>
+<span class="fn">printf</span>(<span class="str">"Max = %d\n"</span>, max);  <span class="cm">// 20</span></pre>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goTo(5)">← Oldingi</button>
+    <button class="btn btn-next" onclick="goTo(7)">Keyingi →</button>
+  </div>
+</div>
+
+<!-- LESSON 8: switch -->
+<div class="lesson" id="l7">
+  <div class="lesson-tag">8-dars</div>
+  <div class="lesson-title">Tanlash operatori: switch</div>
+  <div class="lesson-desc">Ko'p qiymatni tekshirishda if-else zanjiriga qaraganda switch ancha toza va o'qilishi oson.</div>
+
+  <h2>switch sintaksisi</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">C</div></div>
+    <pre><span class="kw">switch</span> (ifoda) {
+    <span class="kw">case</span> qiymat1:
+        <span class="cm">// qiymat1 bo'lsa</span>
+        <span class="kw">break</span>;
+    <span class="kw">case</span> qiymat2:
+        <span class="cm">// qiymat2 bo'lsa</span>
+        <span class="kw">break</span>;
+    <span class="kw">default</span>:
+        <span class="cm">// hech biri mos kelmasa</span>
+}</pre>
+  </div>
+
+  <h2>Misol — kalkulyator</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">kalk.c</div></div>
+    <pre><span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+
+<span class="ty">int</span> <span class="fn">main</span>() {
+    <span class="ty">int</span> a = <span class="num">10</span>, b = <span class="num">3</span>;
+    <span class="ty">char</span> op;
+    <span class="fn">printf</span>(<span class="str">"Amal (+,-,*,/): "</span>);
+    <span class="fn">scanf</span>(<span class="str">" %c"</span>, <span class="op">&amp;</span>op);
+
+    <span class="kw">switch</span> (op) {
+        <span class="kw">case</span> <span class="str">'+'</span>:
+            <span class="fn">printf</span>(<span class="str">"Natija: %d\n"</span>, a + b);
+            <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="str">'-'</span>:
+            <span class="fn">printf</span>(<span class="str">"Natija: %d\n"</span>, a - b);
+            <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="str">'*'</span>:
+            <span class="fn">printf</span>(<span class="str">"Natija: %d\n"</span>, a * b);
+            <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="str">'/'</span>:
+            <span class="fn">printf</span>(<span class="str">"Natija: %d\n"</span>, a / b);
+            <span class="kw">break</span>;
+        <span class="kw">default</span>:
+            <span class="fn">printf</span>(<span class="str">"Noto'g'ri amal!\n"</span>);
+    }
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </div>
+  <div class="output"><div class="output-label">Natija (* tanlanganda)</div>Amal (+,-,*,/): *<br>Natija: 30</div>
+
+  <div class="warn-box">⚠️ <code>break</code> unutilsa — keyingi barcha case'lar ham ishlaydi! Bu "fall-through" deyiladi. Har doim break qo'ying.</div>
+
+  <h2>if-else vs switch</h2>
+  <table>
+    <tr><th>if-else</th><th>switch</th></tr>
+    <tr><td>Har qanday shart (>, &lt;, ==, &&)</td><td>Faqat teng tekshirish (==)</td></tr>
+    <tr><td>float va string bilan ham ishlaydi</td><td>Faqat int va char</td></tr>
+    <tr><td>Ko'p hollarda qo'llaniladi</td><td>Ko'p variant, bir o'zgaruvchi</td></tr>
+  </table>
+
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goTo(6)">← Oldingi</button>
+    <button class="btn btn-next" onclick="goTo(8)">Keyingi →</button>
+  </div>
+</div>
+
+<!-- LESSON 9: while -->
+<div class="lesson" id="l8">
+  <div class="lesson-tag">9-dars</div>
+  <div class="lesson-title">while loop</div>
+  <div class="lesson-desc">Shart to'g'ri bo'lguncha takrorlanadi. Necha marta takrorlanishini bilmasangiz — while ishlating.</div>
+
+  <h2>while sintaksisi</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">C</div></div>
+    <pre><span class="kw">while</span> (shart) {
+    <span class="cm">// shart TRUE bo'lsa takrorla</span>
+    <span class="cm">// shart o'zgartirilishi kerak!</span>
+}</pre>
+  </div>
+
+  <h2>Misol — 1 dan 10 gacha</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">while1.c</div></div>
+    <pre><span class="ty">int</span> i = <span class="num">1</span>;              <span class="cm">// 1. boshlang'ich qiymat</span>
+
+<span class="kw">while</span> (i <= <span class="num">10</span>) {       <span class="cm">// 2. shart</span>
+    <span class="fn">printf</span>(<span class="str">"%d "</span>, i);
+    i++;                  <span class="cm">// 3. i oshiriladi — MUHIM!</span>
+}</pre>
+  </div>
+  <div class="output"><div class="output-label">Natija</div>1 2 3 4 5 6 7 8 9 10</div>
+
+  <div class="warn-box">⚠️ <code>i++</code> unutilsa — "cheksiz loop" (infinite loop) bo'ladi! Dastur hech qachon tugamaydi. Ctrl+C bilan to'xtatiladi.</div>
+
+  <h2>Misol — foydalanuvchi to'g'ri son kiritar</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">tekshir.c</div></div>
+    <pre><span class="ty">int</span> n;
+<span class="fn">printf</span>(<span class="str">"Musbat son kiriting: "</span>);
+<span class="fn">scanf</span>(<span class="str">"%d"</span>, <span class="op">&amp;</span>n);
+
+<span class="kw">while</span> (n <= <span class="num">0</span>) {
+    <span class="fn">printf</span>(<span class="str">"Xato! Qaytadan: "</span>);
+    <span class="fn">scanf</span>(<span class="str">"%d"</span>, <span class="op">&amp;</span>n);
+}
+<span class="fn">printf</span>(<span class="str">"Qabul qilindi: %d\n"</span>, n);</pre>
+  </div>
+  <div class="output"><div class="output-label">Ishlatish</div>Musbat son kiriting: -5<br>Xato! Qaytadan: 0<br>Xato! Qaytadan: 7<br>Qabul qilindi: 7</div>
+
+  <h2>break va continue</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">C</div></div>
+    <pre><span class="ty">int</span> i = <span class="num">0</span>;
+<span class="kw">while</span> (i < <span class="num">10</span>) {
+    i++;
+    <span class="kw">if</span> (i == <span class="num">3</span>) <span class="kw">continue</span>;  <span class="cm">// 3 ni o'tkazib yubor</span>
+    <span class="kw">if</span> (i == <span class="num">7</span>) <span class="kw">break</span>;     <span class="cm">// 7 da to'xta</span>
+    <span class="fn">printf</span>(<span class="str">"%d "</span>, i);
+}</pre>
+  </div>
+  <div class="output"><div class="output-label">Natija</div>1 2 4 5 6</div>
+
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goTo(7)">← Oldingi</button>
+    <button class="btn btn-next" onclick="goTo(9)">Keyingi →</button>
+  </div>
+</div>
+
+<!-- LESSON 10: for -->
+<div class="lesson" id="l9">
+  <div class="lesson-tag">10-dars</div>
+  <div class="lesson-title">for loop</div>
+  <div class="lesson-desc">Aniq marta takrorlash kerak bo'lsa — for loop eng qulay. Boshlang'ich, shart va o'zgartirish bir qatorda yoziladi.</div>
+
+  <h2>for sintaksisi</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">C</div></div>
+    <pre><span class="kw">for</span> (boshlang'ich; shart; o'zgartirish) {
+    <span class="cm">// takrorlanadigan kod</span>
+}
+
+<span class="cm">// Misol:</span>
+<span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < <span class="num">5</span>; i++) {
+    <span class="fn">printf</span>(<span class="str">"%d\n"</span>, i);
+}</pre>
+  </div>
+
+  <h2>for qanday ishlaydi?</h2>
+  <div class="cards">
+    <div class="card accent"><div class="card-top">1. Bir marta</div><div class="card-code">int i = 0</div><div class="card-desc">Boshida bir marta bajariladi</div></div>
+    <div class="card accent"><div class="card-top">2. Har safar</div><div class="card-code">i &lt; 5</div><div class="card-desc">Har iteratsiyada tekshiriladi. Yolg'on bo'lsa — to'xtaydi</div></div>
+    <div class="card accent"><div class="card-top">3. Oxirida</div><div class="card-code">i++</div><div class="card-desc">Blok ishlagandan so'ng bajariladi</div></div>
+  </div>
+
+  <h2>Misol — ko'paytma jadval</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">jadval.c</div></div>
+    <pre><span class="ty">int</span> n = <span class="num">7</span>;
+<span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i <= <span class="num">10</span>; i++) {
+    <span class="fn">printf</span>(<span class="str">"%d x %2d = %d\n"</span>, n, i, n * i);
+}</pre>
+  </div>
+  <div class="output"><div class="output-label">Natija</div>7 x  1 = 7<br>7 x  2 = 14<br>7 x  3 = 21<br>7 x  4 = 28<br>7 x  5 = 35<br>7 x  6 = 42<br>7 x  7 = 49<br>7 x  8 = 56<br>7 x  9 = 63<br>7 x 10 = 70</div>
+
+  <h2>Ichma-ich for loop</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">ichmaich.c</div></div>
+    <pre><span class="cm">// Yulduzchalar uchburchagi</span>
+<span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i <= <span class="num">5</span>; i++) {
+    <span class="kw">for</span> (<span class="ty">int</span> j = <span class="num">1</span>; j <= i; j++) {
+        <span class="fn">printf</span>(<span class="str">"* "</span>);
+    }
+    <span class="fn">printf</span>(<span class="str">"\n"</span>);
+}</pre>
+  </div>
+  <div class="output"><div class="output-label">Natija</div>*<br>* *<br>* * *<br>* * * *<br>* * * * *</div>
+
+  <h2>Teskari for</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">C</div></div>
+    <pre><span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">10</span>; i >= <span class="num">1</span>; i--) {
+    <span class="fn">printf</span>(<span class="str">"%d "</span>, i);
+}</pre>
+  </div>
+  <div class="output"><div class="output-label">Natija</div>10 9 8 7 6 5 4 3 2 1</div>
+
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goTo(8)">← Oldingi</button>
+    <button class="btn btn-next" onclick="goTo(10)">Keyingi →</button>
+  </div>
+</div>
+
+<!-- LESSON 11: do-while -->
+<div class="lesson" id="l10">
+  <div class="lesson-tag">11-dars</div>
+  <div class="lesson-title">do-while loop</div>
+  <div class="lesson-desc">while dan farqi — kod kamida BIR MARTA bajariladi, keyin shart tekshiriladi.</div>
+
+  <h2>do-while sintaksisi</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">C</div></div>
+    <pre><span class="kw">do</span> {
+    <span class="cm">// kamida 1 marta bajariladi</span>
+} <span class="kw">while</span> (shart);  <span class="cm">// oxirida tekshiriladi!</span></pre>
+  </div>
+
+  <h2>while vs do-while</h2>
+  <table>
+    <tr><th>while</th><th>do-while</th></tr>
+    <tr><td>Avval shart, keyin kod</td><td>Avval kod, keyin shart</td></tr>
+    <tr><td>0 marta ham ishlashi mumkin</td><td>Kamida 1 marta ishlaydi</td></tr>
+    <tr><td>Ko'proq ishlatiladi</td><td>Menyu uchun qulay</td></tr>
+  </table>
+
+  <h2>Misol — menyu</h2>
+  <div class="code-wrap">
+    <div class="code-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="lang">menyu.c</div></div>
+    <pre><span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+
+<span class="ty">int</span> <span class="fn">main</span>() {
+    <span class="ty">int</span> tanlov;
+
+    <span class="kw">do</span> {
+        <span class="fn">printf</span>(<span class="str">"\n=== MENYU ===\n"</span>);
+        <span class="fn">printf</span>(<span class="str">"1. Salom\n"</span>);
+        <span class="fn">printf</span>(<span class="str">"2. Xayr\n"</span>);
+        <span class="fn">printf</span>(<span class="str">"0. Chiqish\n"</span>);
+        <span class="fn">printf</span>(<span class="str">"Tanlang: "</span>);
+        <span class="fn">scanf</span>(<span class="str">"%d"</span>, <span class="op">&amp;</span>tanlov);
+
+        <span class="kw">switch</span> (tanlov) {
+            <span class="kw">case</span> <span class="num">1</span>: <span class="fn">printf</span>(<span class="str">"Salom!\n"</span>);     <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="num">2</span>: <span class="fn">printf</span>(<span class="str">"Xayr!\n"</span>);      <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="num">0</span>: <span class="fn">printf</span>(<span class="str">"Chiqildi.\n"</span>); <span class="kw">break</span>;
+            <span class="kw">default</span>: <span class="fn">printf</span>(<span class="str">"Xato!\n"</span>);
+        }
+    } <span class="kw">while</span> (tanlov != <span class="num">0</span>);   <span class="cm">// 0 kiritilmasa takrorla</span>
+
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </div>
+
+  <h2>3 loop qachon ishlatiladi?</h2>
+  <div class="cards">
+    <div class="card accent"><div class="card-top">for</div><div class="card-code">Aniq marta</div><div class="card-desc">1 dan 10, jadval, massiv</div></div>
+    <div class="card accent"><div class="card-top">while</div><div class="card-code">Shart bor ekan</div><div class="card-desc">Nechta ekani noma'lum</div></div>
+    <div class="card accent"><div class="card-top">do-while</div><div class="card-code">Kamida 1 marta</div><div class="card-desc">Menyu, tekshirish</div></div>
+  </div>
+
+  <div class="tip">🎉 Tabriklaymiz! Siz C dasturlash tilining asoslarini o'rgandingiz. Endi mashq qiling — ko'proq kod yozgan sari yaxshiroq bo'lasiz!</div>
+
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goTo(9)">← Oldingi</button>
+    <button class="btn btn-next" disabled>✅ Kurs tugadi!</button>
+  </div>
+</div>
+
+</div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+  const total = 11;
+  let current = 0;
+  const done = new Set([0]);
+
+  function goTo(n) {
+    document.getElementById('l' + current).classList.remove('active');
+    document.querySelectorAll('.nav-item')[current].classList.remove('active');
+    done.add(n);
+    current = n;
+    document.getElementById('l' + n).classList.add('active');
+    const items = document.querySelectorAll('.nav-item');
+    items[n].classList.add('active');
+    done.forEach(i => {
+      items[i].classList.add('done');
+      items[i].querySelector('.num').textContent = i < n ? '✓' : (i + 1);
+    });
+    document.getElementById('progress').style.width = (Math.max(...done) + 1) / total * 100 + '%';
+    document.querySelector('.main').scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

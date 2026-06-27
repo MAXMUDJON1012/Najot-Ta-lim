@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="5"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-04 08:34:18 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA0OzA4OjMwOjM4IFBNOzE5OTM="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA0OzA4OjM0OjE4IFBNOzE7MjEwMw=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="t" type="Integer" array="False" size=""/>
+            <if expression="t&lt;0">
+                <then>
+                    <output expression="&quot;sovuq&quot;" newline="True"/>
+                </then>
+                <else>
+                    <if expression="t&lt;15">
+                        <then>
+                            <output expression="&quot;salqin&quot;" newline="True"/>
+                        </then>
+                        <else>
+                            <if expression="t&lt;25">
+                                <then>
+                                    <output expression="&quot;iliq&quot;" newline="True"/>
+                                </then>
+                                <else>
+                                    <if expression="t&lt;35">
+                                        <then>
+                                            <output expression="&quot;issiq&quot;" newline="True"/>
+                                        </then>
+                                        <else>
+                                            <output expression="&quot;juda issiq&quot;" newline="True"/>
+                                        </else>
+                                    </if>
+                                </else>
+                            </if>
+                        </else>
+                    </if>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>
