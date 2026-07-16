@@ -1,0 +1,22 @@
+[
+    {
+        "ism": "Ali",
+        "telefon": "+998901234567",
+        "shahar": "Toshkent"
+    },
+    {
+        "ism": "Vali",
+        "telefon": "+998907654321",
+        "shahar": "Samarqand"
+    },
+    {
+        "ism": "Zara",
+        "telefon": "+998991112233",
+        "shahar": "Toshkent"
+    },
+    {
+        "ism": "Kamol",
+        "telefon": "+998993334455",
+        "shahar": "Buxoro"
+    }
+]

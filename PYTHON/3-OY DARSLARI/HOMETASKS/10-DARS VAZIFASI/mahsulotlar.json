@@ -1,0 +1,8 @@
+[
+    {"nomi": "Telefon",   "narx": 5000000},
+    {"nomi": "Noutbuk",   "narx": 12000000},
+    {"nomi": "Qulaqchin", "narx": 800000},
+    {"nomi": "Planshet",  "narx": 7500000},
+    {"nomi": "Soat",      "narx": 1200000},
+    {"nomi": "Kamera",    "narx": 9000000}
+]
