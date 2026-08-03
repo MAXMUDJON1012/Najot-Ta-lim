@@ -1,0 +1,1 @@
+SELECT * FROM students WHERE score IN (55, 75, 99);
