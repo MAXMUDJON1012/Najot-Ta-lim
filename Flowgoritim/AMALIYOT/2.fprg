@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="2"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-02 11:16:02 AM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzExOjEzOjQ5IEFNOzE5NzM="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzExOjE2OjAyIEFNOzE7MjA3Mw=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="a" type="Integer" array="False" size=""/>
+            <input variable="A"/>
+            <if expression="a&gt;0">
+                <then>
+                    <assign variable="A" expression="a+1"/>
+                </then>
+                <else/>
+            </if>
+            <output expression="A" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="2"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-05 03:42:13 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA1OzAzOjE4OjUwIFBNOzE5ODk="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA1OzAzOjQyOjEzIFBNOzI7MjA5NA=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="a" type="Integer" array="False" size=""/>
+            <declare name="b" type="Integer" array="False" size=""/>
+            <declare name="count" type="Integer" array="False" size=""/>
+            <input variable="a"/>
+            <input variable="b"/>
+            <assign variable="count" expression="0"/>
+            <for variable="a" start="a" end="b" direction="inc" step="1">
+                <output expression="a" newline="True"/>
+                <assign variable="count" expression="count+1"/>
+            </for>
+            <output expression="count &amp;   &quot;ta son&quot;" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="1"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-06 03:46:23 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzAzOjQyOjQ5IFBNOzE5OTU="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzAzOjQ0OjMyIFBNOzE7TUFYTVU7QVNVUzsyMDI2LTA1LTA1OzAzOjQ2OjI5IFBNOzUuZnByZzs0NzQx"/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzAzOjQ2OjIzIFBNOzE7MjA5OQ=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="qiymat" type="Integer" array="False" size=""/>
+            <declare name="kg" type="Real" array="False" size=""/>
+            <declare name="narx" type="Integer" array="False" size=""/>
+            <input variable="narx"/>
+            <for variable="kg" start="1.2" end="2" direction="inc" step="0.2">
+                <assign variable="qiymat" expression="kg* narx"/>
+                <output expression="qiymat" newline="True"/>
+            </for>
+        </body>
+    </function>
+</flowgorithm>

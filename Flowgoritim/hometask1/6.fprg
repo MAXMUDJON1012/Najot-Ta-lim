@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="6"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-02 05:48:49 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzA1OjQzOjAzIFBNOzE5ODQ="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzA1OjQ4OjQ5IFBNOzE7MjEwNw=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="son" type="Integer" array="False" size=""/>
+            <declare name="b" type="Integer" array="False" size=""/>
+            <declare name="on" type="Real" array="False" size=""/>
+            <input variable="son"/>
+            <assign variable="b" expression="son/10"/>
+            <assign variable="on" expression="son%10"/>
+            <output expression="b" newline="True"/>
+            <output expression="on" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

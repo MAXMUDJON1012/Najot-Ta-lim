@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="11"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-02 06:27:19 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzA2OjI1OjU5IFBNOzE5OTY="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzA2OjI2OjI3IFBNOzI7TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzA2OjIxOjUxIFBNOzEwLmZwcmc7NDc3Nw=="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzA2OjI3OjE5IFBNOzE7MjEwMg=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="uch" type="Integer" array="False" size=""/>
+            <declare name="yuz" type="Integer" array="False" size=""/>
+            <declare name="on" type="Integer" array="False" size=""/>
+            <declare name="b" type="Integer" array="False" size=""/>
+            <declare name="y" type="Integer" array="False" size=""/>
+            <input variable="uch"/>
+            <assign variable="yuz" expression="uch/100"/>
+            <assign variable="b" expression="uch%10"/>
+            <assign variable="on" expression="(uch-(yuz*100)-b)/10"/>
+            <assign variable="y" expression="yuz+b+on"/>
+            <output expression="y" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

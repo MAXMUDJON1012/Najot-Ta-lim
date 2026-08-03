@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Amaliyot 1"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-02 11:11:42 AM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzEwOjUwOjQyIEFNOzE5NjY="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzExOjExOjQyIEFNOzI7MjA3Mw=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="a" type="Integer" array="False" size=""/>
+            <input variable="a"/>
+            <if expression="a/2==0">
+                <then>
+                    <assign variable="A" expression="a+1"/>
+                </then>
+                <else>
+                    <assign variable="A" expression="a-2"/>
+                </else>
+            </if>
+            <output expression="A" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

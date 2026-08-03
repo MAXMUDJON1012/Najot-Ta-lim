@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="2"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-06 03:51:19 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzAzOjQ3OjAyIFBNOzE5ODk="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzAzOjUxOjE5IFBNOzE7MjEwMA=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="a" type="Integer" array="False" size=""/>
+            <declare name="b" type="Integer" array="False" size=""/>
+            <declare name="yigindi" type="Integer" array="False" size=""/>
+            <input variable="a"/>
+            <input variable="b"/>
+            <assign variable="yigindi" expression="0"/>
+            <for variable="a" start="a" end="b" direction="inc" step="1">
+                <assign variable="yigindi" expression="yigindi+a"/>
+            </for>
+            <output expression="yigindi" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

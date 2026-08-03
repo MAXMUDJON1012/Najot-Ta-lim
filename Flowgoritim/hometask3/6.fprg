@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="6"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-06 05:36:21 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzA0OjExOjUzIFBNOzE5ODc="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzA1OjM2OjIxIFBNOzI7MjA5OQ=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="foiz" type="Integer" array="False" size=""/>
+            <input variable="foiz"/>
+            <declare name="masofa" type="Real" array="False" size=""/>
+            <declare name="kun" type="Integer" array="False" size=""/>
+            <assign variable="kun" expression="0"/>
+            <declare name="jami" type="Integer" array="False" size=""/>
+            <assign variable="jami" expression="0"/>
+            <assign variable="masofa" expression="10"/>
+            <if expression="0&lt;foiz or foiz&gt;50">
+                <then>
+                    <while expression="jami&lt;=200">
+                        <assign variable="jami" expression="jami+masofa"/>
+                        <assign variable="kun" expression="kun+1"/>
+                        <assign variable="masofa" expression="masofa+masofa/100*foiz"/>
+                    </while>
+                    <output expression="kun &amp; &quot;kunda&quot; &amp; jami" newline="True"/>
+                </then>
+                <else>
+                    <output expression="&quot;xato&quot;" newline="True"/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

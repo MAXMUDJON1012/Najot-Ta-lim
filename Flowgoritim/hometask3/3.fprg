@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="3"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-06 03:53:29 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzAzOjUxOjU3IFBNOzE5OTQ="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzAzOjUyOjAxIFBNOzE7TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzAzOjQ3OjAyIFBNOzIuZnByZzs0NzI2"/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzAzOjUzOjI5IFBNOzE7MjEwMw=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="a" type="Integer" array="False" size=""/>
+            <declare name="b" type="Integer" array="False" size=""/>
+            <declare name="yigindi" type="Integer" array="False" size=""/>
+            <input variable="a"/>
+            <input variable="b"/>
+            <assign variable="yigindi" expression="1"/>
+            <for variable="a" start="a" end="b" direction="inc" step="1">
+                <assign variable="yigindi" expression="yigindi*a"/>
+            </for>
+            <output expression="yigindi" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>
