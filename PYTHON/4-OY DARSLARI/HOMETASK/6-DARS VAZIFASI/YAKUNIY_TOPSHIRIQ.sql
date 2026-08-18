@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS enrollments (
     enrollment_date DATE,
     status VARCHAR(20)
 );
+
 INSERT INTO students (full_name, phone, city, registered_date)
 VALUES 
 ('Ali Valiyev', '+998901112233', 'Toshkent', '2026-07-01'),
@@ -47,7 +48,6 @@ VALUES
 (3, 3, '2026-07-18', 'active'),
 (4, 1, '2026-07-20', 'completed'),
 (2, 3, '2026-07-22', 'cancelled');
-
 
 SELECT s.student_id, s.full_name, s.city, c.course_name, c.price, e.enrollment_date, e.status
 FROM enrollments e
@@ -84,6 +84,10 @@ INNER JOIN students s ON e.student_id = s.student_id
 INNER JOIN courses c ON e.course_id = c.course_id
 ORDER BY s.full_name ASC;
 
+
+
+
+
 SELECT s.student_id, s.full_name, s.city, c.course_name, e.status
 FROM students s
 LEFT JOIN enrollments e ON s.student_id = e.student_id
@@ -113,6 +117,10 @@ SELECT c.course_id, c.course_name, COUNT(e.student_id) AS talabalar_soni
 FROM courses c
 LEFT JOIN enrollments e ON c.course_id = e.course_id
 GROUP BY c.course_id, c.course_name;
+
+
+
+
 
 SELECT c.course_name, c.price, s.full_name, e.enrollment_date, e.status
 FROM enrollments e
@@ -190,3 +198,7 @@ FROM enrollments e
 INNER JOIN students s ON e.student_id = s.student_id
 INNER JOIN courses c ON e.course_id = c.course_id
 WHERE c.price = (SELECT MAX(price) FROM courses);
+
+
+
+
