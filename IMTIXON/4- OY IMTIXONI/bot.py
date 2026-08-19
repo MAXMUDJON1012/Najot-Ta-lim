@@ -4,19 +4,18 @@ from mysql.connector import Error
 from datetime import date
 
 from aiogram import Bot, Dispatcher, Router, F
-from aiogram.filters import CommandStart, Command
+from aiogram.filters import CommandStart
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
 
-# 1. Telegram Bot Token va Baza sozlamalari
-BOT_TOKEN = "8829400282:AAHwhDOOsl3REmwak8zP-Kjis0vi-m-R7G0"  # @BotFather bergan tokenni yozing
+BOT_TOKEN = "8829400282:AAHwhDOOsl3REmwak8zP-Kjis0vi-m-R7G0"
 
 DB_CONFIG = {
     "host": "localhost",
     "user": "root",
-    "password": "2005",  # MySQL parolingiz
+    "password": "2005",
     "database": "daily_expenses_db"
 }
 
@@ -25,7 +24,6 @@ dp = Dispatcher(storage=MemoryStorage())
 router = Router()
 dp.include_router(router)
 
-# 2. FSM Holatlari (Ma'lumot kiritish va Qidiruv uchun)
 class ExpenseState(StatesGroup):
     waiting_for_title = State()
     waiting_for_amount = State()
@@ -34,15 +32,12 @@ class ExpenseState(StatesGroup):
 class SearchState(StatesGroup):
     waiting_for_query = State()
 
-# 3. MySQL Bazasiga ulanish funksiyasi
 def get_connection():
     try:
         return mysql.connector.connect(**DB_CONFIG)
-    except Error as e:
-        print(f"[Xatolik] Bazaga ulanishda muammo: {e}")
+    except Error:
         return None
 
-# 4. Asosiy Menyu Tugmalari
 def main_menu():
     return ReplyKeyboardMarkup(
         keyboard=[
@@ -52,8 +47,6 @@ def main_menu():
         ],
         resize_keyboard=True
     )
-
-# ----------------- HANDLERS -----------------
 
 @router.message(CommandStart())
 async def start_handler(message: Message, state: FSMContext):
@@ -66,7 +59,6 @@ async def start_handler(message: Message, state: FSMContext):
         reply_markup=main_menu()
     )
 
-# 1. Barcha xarajatlarni ko'rish
 @router.message(F.text == "📋 Barcha xarajatlar")
 async def view_all(message: Message):
     conn = get_connection()
@@ -101,7 +93,6 @@ async def view_all(message: Message):
         cursor.close()
         conn.close()
 
-# 2. Jami hisobot
 @router.message(F.text == "📊 Jami hisobot")
 async def summary_report(message: Message):
     conn = get_connection()
@@ -135,7 +126,6 @@ async def summary_report(message: Message):
         cursor.close()
         conn.close()
 
-# 3. Yangi xarajat qo'shish (FSM bosqichlari)
 @router.message(F.text == "➕ Yangi xarajat qo'shish")
 async def add_expense_start(message: Message, state: FSMContext):
     await state.set_state(ExpenseState.waiting_for_title)
@@ -194,7 +184,6 @@ async def process_category(message: Message, state: FSMContext):
 
     await state.clear()
 
-# 4. Qidiruv bo'limi
 @router.message(F.text == "🔍 Qidirish")
 async def search_start(message: Message, state: FSMContext):
     await state.set_state(SearchState.waiting_for_query)
@@ -231,9 +220,7 @@ async def search_process(message: Message, state: FSMContext):
 
     await state.clear()
 
-# ----------------- ISHGA TUSHIRISH -----------------
 async def main():
-    print("Bot ishga tushdi va MySQL bazasiga ulandi...")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
