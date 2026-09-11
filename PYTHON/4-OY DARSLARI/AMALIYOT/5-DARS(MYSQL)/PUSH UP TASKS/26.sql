@@ -1,4 +1,0 @@
-SELECT * FROM students 
-WHERE age BETWEEN 18 AND 21 
-ORDER BY score DESC;
-SELECT * FROM students ORDER BY score DESC LIMIT 5;

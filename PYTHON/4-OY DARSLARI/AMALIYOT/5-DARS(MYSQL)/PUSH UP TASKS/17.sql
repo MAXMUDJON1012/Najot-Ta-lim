@@ -1,1 +1,0 @@
-SELECT * FROM students WHERE score BETWEEN 70 AND 90;

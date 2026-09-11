@@ -1,1 +1,0 @@
-SELECT * FROM students WHERE age BETWEEN 18 AND 20;

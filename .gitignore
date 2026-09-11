@@ -1,6 +1,0 @@
-.venv/
-*.msi
-*.exe
-__pycache__/
-.vscode/
-.idea/

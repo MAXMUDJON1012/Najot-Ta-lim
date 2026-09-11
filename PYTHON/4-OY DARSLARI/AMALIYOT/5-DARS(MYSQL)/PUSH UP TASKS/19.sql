@@ -1,1 +1,0 @@
-SELECT * FROM students WHERE city IN ('Toshkent', 'Samarqand', 'Buxoro');
