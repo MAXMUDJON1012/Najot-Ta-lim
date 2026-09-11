@@ -1,1 +1,0 @@
-SELECT * FROM students WHERE id BETWEEN 3 AND 8;

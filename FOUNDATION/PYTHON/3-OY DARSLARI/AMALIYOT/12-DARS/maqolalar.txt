@@ -1,5 +1,0 @@
-Python asoslari
-HTML va CSS
-Python bilan veb
-Django freymvorki
-Python OOP

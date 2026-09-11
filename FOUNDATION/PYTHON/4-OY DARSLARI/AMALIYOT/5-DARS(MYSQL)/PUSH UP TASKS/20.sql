@@ -1,1 +1,0 @@
-SELECT * FROM students WHERE age IN (18, 20, 22);

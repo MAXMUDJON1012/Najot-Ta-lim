@@ -1,1 +1,0 @@
-SELECT * FROM students ORDER BY score DESC LIMIT 5;
