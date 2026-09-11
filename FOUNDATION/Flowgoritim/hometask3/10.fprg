@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="10"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-06 06:16:23 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzA2OjA5OjMyIFBNOzE5OTM="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzA2OjE2OjIzIFBNOzE7MjA5OQ=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="n" type="Integer" array="False" size=""/>
+            <declare name="qoldiq" type="Integer" array="False" size=""/>
+            <declare name="bor" type="Integer" array="False" size=""/>
+            <input variable="n"/>
+            <assign variable="bor" expression="0"/>
+            <while expression="n&gt;0">
+                <assign variable="qoldiq" expression="n%10"/>
+                <if expression="qoldiq=2">
+                    <then>
+                        <assign variable="bor" expression="1"/>
+                    </then>
+                    <else/>
+                </if>
+                <assign variable="n" expression="n/10"/>
+            </while>
+            <if expression="bor=1">
+                <then>
+                    <output expression="&quot;2 raqami bor&quot;" newline="True"/>
+                </then>
+                <else>
+                    <output expression="&quot;2 raqami yoq&quot;" newline="True"/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

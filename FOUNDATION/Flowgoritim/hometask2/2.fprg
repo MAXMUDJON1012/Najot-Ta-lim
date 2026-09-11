@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="2"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-04 06:22:27 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA0OzA2OjExOjQxIFBNOzE5ODQ="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA0OzA2OjE2OjI1IFBNOzI7TUFYTVU7QVNVUzsyMDI2LTA1LTA0OzA2OjAzOjIyIFBNOzQxNDM="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA0OzA2OjIyOjI3IFBNOzE7MjA5OA=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="yil" type="Integer" array="False" size=""/>
+            <input variable="yil"/>
+            <if expression="yil%400==0">
+                <then>
+                    <output expression="&quot;yil kabisa&quot;" newline="True"/>
+                </then>
+                <else>
+                    <if expression="yil%100=0">
+                        <then>
+                            <output expression="&quot;kabisa yili emas&quot;" newline="True"/>
+                        </then>
+                        <else>
+                            <if expression="yil%4==0">
+                                <then>
+                                    <output expression="&quot;kabisa yil&quot;" newline="True"/>
+                                </then>
+                                <else>
+                                    <output expression="&quot;kabisa emas&quot;" newline="True"/>
+                                </else>
+                            </if>
+                        </else>
+                    </if>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

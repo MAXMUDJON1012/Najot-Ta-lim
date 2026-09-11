@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="3"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-04 08:16:47 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA0OzA3OjI4OjE4IFBNOzE5OTc="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA0OzA4OjE2OjQ3IFBNOzE7MjEwNQ=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="yosh" type="Integer" array="False" size=""/>
+            <input variable="yosh"/>
+            <if expression="yosh&lt;=0">
+                <then>
+                    <output expression="&quot;Bola xali planda&quot;" newline="True"/>
+                </then>
+                <else>
+                    <if expression="yosh&lt;=12">
+                        <then>
+                            <output expression="&quot;bola&quot;" newline="True"/>
+                        </then>
+                        <else>
+                            <if expression="yosh&lt;=17">
+                                <then>
+                                    <output expression="&quot;o'smir&quot;" newline="True"/>
+                                </then>
+                                <else>
+                                    <output expression="&quot;katta&quot;" newline="True"/>
+                                </else>
+                            </if>
+                        </else>
+                    </if>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>
