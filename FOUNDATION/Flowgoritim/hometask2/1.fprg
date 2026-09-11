@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="hometask2"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-04 06:09:28 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA0OzA2OjAzOjIyIFBNOzE5ODQ="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA0OzA2OjA3OjU2IFBNOzE7TUFYTVU7QVNVUzsyMDI2LTA1LTAyOzExOjUxOjAxIEFNOzUuZnByZzs0NzE0"/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA0OzA2OjA5OjI4IFBNOzE7MjEwNA=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="a" type="Integer" array="False" size=""/>
+            <declare name="b" type="Integer" array="False" size=""/>
+            <declare name="c" type="Integer" array="False" size=""/>
+            <input variable="a"/>
+            <input variable="b"/>
+            <input variable="c"/>
+            <if expression="a&gt;=b and a&gt;=c">
+                <then>
+                    <output expression="a" newline="True"/>
+                </then>
+                <else>
+                    <if expression="b&gt;=c and b&gt;=c">
+                        <then>
+                            <output expression="b" newline="True"/>
+                        </then>
+                        <else>
+                            <output expression="c" newline="True"/>
+                        </else>
+                    </if>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

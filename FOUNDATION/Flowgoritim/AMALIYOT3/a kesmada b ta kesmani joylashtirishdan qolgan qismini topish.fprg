@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="a kesmada b ta kesmani joylashtirishdan qolgan qismini topish"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-05 04:54:40 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA1OzA0OjQ4OjI0IFBNOzE5OTQ="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA1OzA0OjQ4OjI3IFBNOzE7YXNhdHVsbGF5ZXY7V0lOMTA7MjAyNi0wNS0wNTswNDowOTozNSBQTTt3aGlsZS0xLmZwcmc7NjE0Ng=="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA1OzA0OjU0OjQwIFBNOzE7MjA5Nw=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="A, B" type="Integer" array="False" size=""/>
+            <input variable="A"/>
+            <input variable="B"/>
+            <while expression="A&gt;B">
+                <assign variable="A" expression="A-B"/>
+                <output expression="&quot;A=&quot; &amp; A &amp; &quot;  B=&quot; &amp; B" newline="True"/>
+            </while>
+            <output expression="A" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

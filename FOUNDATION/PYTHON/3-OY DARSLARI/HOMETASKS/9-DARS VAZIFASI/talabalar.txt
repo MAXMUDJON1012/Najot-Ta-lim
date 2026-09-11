@@ -1,0 +1,3 @@
+Ali,85
+Vali,72
+Zara,91

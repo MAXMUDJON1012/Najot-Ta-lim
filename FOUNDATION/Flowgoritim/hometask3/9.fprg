@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="9"/>
+        <attribute name="authors" value="MAXMU"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-06 06:09:24 PM"/>
+        <attribute name="created" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzA2OjAxOjQxIFBNOzE5ODU="/>
+        <attribute name="edited" value="TUFYTVU7QVNVUzsyMDI2LTA1LTA2OzA2OjA5OjI0IFBNOzE7MjEwMg=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="n" type="Integer" array="False" size=""/>
+            <declare name="qoldiq" type="Integer" array="False" size=""/>
+            <declare name="yigindi" type="Integer" array="False" size=""/>
+            <declare name="soni" type="Integer" array="False" size=""/>
+            <input variable="n"/>
+            <assign variable="yigindi" expression="0"/>
+            <assign variable="soni" expression="0"/>
+            <while expression="n&gt;0">
+                <assign variable="qoldiq" expression="n % 10"/>
+                <assign variable="yigindi" expression="yigindi+qoldiq"/>
+                <assign variable="soni" expression="soni+1"/>
+                <assign variable="n" expression="n/10"/>
+            </while>
+            <output expression="&quot;Yigindi&quot; &amp; yigindi" newline="True"/>
+            <output expression="&quot;Soni&quot; &amp; soni" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>
