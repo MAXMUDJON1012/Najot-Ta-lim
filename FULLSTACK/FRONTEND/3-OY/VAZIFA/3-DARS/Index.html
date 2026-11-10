@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JavaScript_Figma maket</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="./style.css/main.css" />
+</head>
+<body>
+
+  <main class="container">
+    <header class="header">
+      <h1 class="logo">devfinder</h1>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="theme-text" id="themeText">LIGHT</span>
+        <svg id="themeIcon" class="theme-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M10 2.5a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 10 2.5ZM10 14.5a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 10 14.5ZM4.697 3.636a.75.75 0 0 1 1.06 0l1.061 1.061a.75.75 0 0 1-1.06 1.06L4.696 4.697a.75.75 0 0 1 0-1.061ZM13.182 12.121a.75.75 0 0 1 1.06 0l1.061 1.061a.75.75 0 0 1-1.06 1.06l-1.06-1.06a.75.75 0 0 1 0-1.061ZM2.5 10a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5A.75.75 0 0 1 2.5 10ZM14.5 10a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75ZM4.697 16.364a.75.75 0 0 1 0-1.06l1.06-1.061a.75.75 0 1 1 1.061 1.06l-1.06 1.061a.75.75 0 0 1-1.061 0ZM13.182 7.879a.75.75 0 0 1 0-1.06l1.06-1.061a.75.75 0 1 1 1.061 1.06l-1.06 1.061a.75.75 0 0 1-1.061 0ZM10 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" />
+        </svg>
+      </button>
+    </header>
+
+    <form class="search-form" id="searchForm" autocomplete="off">
+      <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0079FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="searchInput" class="search-input" placeholder="Search GitHub username..." spellcheck="false" />
+      <span class="error-msg" id="errorMsg">No results</span>
+      <button type="submit" class="search-btn">Search</button>
+    </form>
+
+    <article class="profile-card" id="profileCard">
+      <div class="avatar-col">
+        <img id="avatar" class="avatar-img" src="" alt="User Avatar" />
+      </div>
+
+      <div class="content-col">
+        <header class="profile-header">
+          <img id="mobileAvatar" class="avatar-img mobile-avatar" src="" alt="User Avatar" />
+          <div class="name-box">
+            <h2 class="user-name" id="name">The Octocat</h2>
+            <a class="user-login" id="login" href="#" target="_blank" rel="noopener noreferrer">@octocat</a>
+            <p class="joined-date" id="joinedDate">Joined 25 Jan 2011</p>
+          </div>
+        </header>
+
+        <p class="user-bio" id="bio">This profile has no bio</p>
+
+        <div class="stats-box">
+          <div class="stat-item">
+            <span class="stat-title">Repos</span>
+            <span class="stat-value" id="repos">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-title">Followers</span>
+            <span class="stat-value" id="followers">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-title">Following</span>
+            <span class="stat-value" id="following">0</span>
+          </div>
+        </div>
+
+        <footer class="links-grid">
+          <div class="link-item" id="locationItem">
+            <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+            </svg>
+            <span class="link-text" id="location">San Francisco</span>
+          </div>
+
+          <div class="link-item" id="twitterItem">
+            <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.953 4.57a10 10 0 0 1-2.825.775 4.958 4.958 0 0 0 2.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 0 0-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 0 0-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 0 1-2.228-.616v.06a4.923 4.923 0 0 0 3.946 4.827 4.996 4.996 0 0 1-2.212.085 4.936 4.936 0 0 0 4.604 3.417 9.867 9.867 0 0 1-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 0 0 7.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.936 9.936 0 0 0 24 4.59z"/>
+            </svg>
+            <span class="link-text" id="twitter">Not Available</span>
+          </div>
+
+          <div class="link-item" id="blogItem">
+            <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+            <a class="link-text" id="blog" href="#" target="_blank" rel="noopener noreferrer">https://github.blog</a>
+          </div>
+
+          <div class="link-item" id="companyItem">
+            <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
+            </svg>
+            <span class="link-text" id="company">@github</span>
+          </div>
+        </footer>
+      </div>
+    </article>
+  </main>
+
+  <script src="./app.js/add.js"></script>
+</body>
+</html>
